@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.potatospy</groupId>
+    <artifactId>FractalFriend</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Fractal Friend</name>
+
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+
+
+    <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.openjfx</groupId>-->
+<!--            <artifactId>javafx-fxml</artifactId>-->
+<!--            <version>11.0.2</version>-->
+<!--            <classifier>win</classifier>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.openjfx</groupId>-->
+<!--            <artifactId>javafx-fxml</artifactId>-->
+<!--            <version>11</version>-->
+<!--            <classifier>linux</classifier>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.openjfx</groupId>-->
+<!--            <artifactId>javafx-fxml</artifactId>-->
+<!--            <version>11</version>-->
+<!--            <classifier>mac</classifier>-->
+<!--        </dependency>-->
+    </dependencies>
+
+
+
+
+<!--
+Maven compiler plugin config for java 11
+
+<resources> directs maven to the fxml files in src/main/resources
+
+
+
+
+
+
+-->
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+<!--                    <release></release>-->
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.potatospy.fractalfriend.NewMain</mainClass>
+                                </transformer>
+                            </transformers>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>classworlds:classworlds</exclude>
+                                    <exclude>junit:junit</exclude>
+                                    <exclude>jmock:*</exclude>
+                                    <exclude>*:xml-apis</exclude>
+                                    <exclude>org.apache.maven:lib:tests</exclude>
+                                    <exclude>log4j:log4j:jar:</exclude>
+                                </excludes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources/</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>
