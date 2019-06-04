@@ -106,17 +106,17 @@ public class Controller implements Initializable {
 
 
 
-    // == INIT ==
+    // == Initialize ==
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Set up canvas for drawing
+        // SET UP CANVAS for drawing
         gc = fractal.getGraphicsContext2D();
         clearCanvas();
 
 
-        // Set initial slider values to their respective labels
+        // SET INITIAL Slider, ColorPicker and Spinner values to their respective labels
         labelSegmentLength.textProperty().setValue(String.valueOf((int)sliderSegmentLength.getValue()));
         labelInitialAngle.textProperty().setValue(String.valueOf((int)sliderInitialAngle.getValue()));
         labelRelativeLength.textProperty().setValue(String.valueOf((int)sliderRelativeLength.getValue()));
@@ -124,7 +124,7 @@ public class Controller implements Initializable {
         labelYPos.textProperty().setValue(String.valueOf((int)sliderYPos.getValue()));
 
 
-        // Set up input observers (Makes slider values appear in text fields below each one)
+        // SET UP INPUT OBSERVERS (Makes slider values appear in text fields below each one)
         sliderSegmentLength.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -158,6 +158,7 @@ public class Controller implements Initializable {
     }
 
 
+
     // == Button Handlers ==
 
     @FXML
@@ -167,11 +168,9 @@ public class Controller implements Initializable {
     }
 
 
-    // drawTree - Gather all input data from ui.fxml input controls and draw
+    // drawTree - Gather all input data from input controls and draw
     @FXML
     private void drawTree(){
-
-        //FractalGenerator fgen = new FractalGenerator(colorPickerStartColour, colorPickerEndColour, iterations);
 
         iterations = spinnerIterations.getValue();
         double segmentLength = sliderSegmentLength.getValue();
@@ -182,13 +181,15 @@ public class Controller implements Initializable {
         double endOfLastSegmentX= 450;
         stepArray = initializeColourSteps(iterations);
 
-        // Todo endOfLastSegment should be equal to 1/2 the canvas size
+
         makeFractal(gc,
                 endOfLastSegmentX, endOfLastSegmentY, segmentLength,
                 initialAngle, iterations,
                 nextIterationRelativeLength, nextIterationAngle);
 
     }
+
+
     // makeFractal draws 1 iteration of the fractal and calls two more makeFractal
     public void makeFractal(GraphicsContext gc,
                             double endOfLastSegmentX, double endOfLastSegmentY,
@@ -197,6 +198,7 @@ public class Controller implements Initializable {
                             int iterationsRemaining,
                             double nextIterationRelativeLength, double nextIterationAngle){
 
+        // If there are no iterations remaining to draw, stop.
         if(iterationsRemaining<0){ return; }
         iterationsRemaining--;
 
@@ -206,6 +208,7 @@ public class Controller implements Initializable {
         // Set segment's colour
         gc.setStroke(getNextColour(iterationsRemaining));
 
+        // Set end of current segment
         double endOfCurrentSegmentX = segmentLength*Math.cos(segmentAngle)+endOfLastSegmentX;
         double endOfCurrentSegmentY = segmentLength*Math.sin(segmentAngle)+endOfLastSegmentY;
 
@@ -291,6 +294,7 @@ public class Controller implements Initializable {
 
     // Add or subtract color from the color used by the segment of the last iteration
     public Color getNextColour(int iterationsRemaining){
+
 
         double red = (iterations-iterationsRemaining-1)*stepArray[0] + colorPickerStartColour.getValue().getRed();
         double green = (iterations-iterationsRemaining-1)*stepArray[1] + colorPickerStartColour.getValue().getGreen();
